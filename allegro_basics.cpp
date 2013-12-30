@@ -46,7 +46,7 @@ int main(){
 
     LOCK_VARIABLE(ticks);
     LOCK_FUNCTION(ticker);
-    install_int_ex(ticker, BPS_TO_TIMER(1000));
+    install_int_ex(ticker, BPS_TO_TIMER(40));
 
     LOCK_FUNCTION(closeWindowCall);
     set_close_button_callback(closeWindowCall);
@@ -55,7 +55,7 @@ int main(){
     Block block (50,50,50,makecol(255,0,0));
 
     while (!(key[KEY_ESC] || closeWindow)) {
-        if(ticks>30){
+        if(ticks>0){
             clear(buffer); // For double buffering
             rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(0,0,255));
             textprintf_ex(buffer,font,10,10,makecol(0,0,0),-1,"Move with Left and Right, Up to jump. Esc to exit.");
@@ -68,6 +68,8 @@ int main(){
             show_mouse(buffer);
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);//Needs to be last draw command (Draw everything).
             ticks=0;
+        } else {
+            rest(1);
         }
     }
     allegro_exit();
