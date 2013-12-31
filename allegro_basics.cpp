@@ -1,5 +1,6 @@
 #include <allegro.h>
-
+#include <iostream>
+#include "Block.h"
 BITMAP *buffer;
 volatile int closeWindow = false;
 volatile int ticks = 0;
@@ -9,36 +10,31 @@ void ticker(){ ticks++; } // Timer
 END_OF_FUNCTION(ticker)
 void init();
 
-class Block {
-    public:
-     double X, Y, dX, dY, aX, aY, Size = 0; // X,Y position and size of block. Doubles to more eased vel and acc.
-     BITMAP *sprite; // The bitmap of the Block (sprite)
-     int Color; // The Color of the object (32bit)
-     Block(int X, int Y, int Size, int Color){ // init Block
+class Tile {
+public:
+    double X,Y,Size;
+    BITMAP *sprite = create_bitmap(Size,Size);
+    int Color = makecol(0,0,0);
+    Tile(){ //Note: Need an empty contructor to create an array of this type.
+        X=0;Y=0;Size=0;Color = makecol(0,0,0);
+    }
+    Tile(int X,int Y,int Size){
         this->X = X; this->Y = Y;
-        this->dX = 0; this->dY = 0;
-        this->aX = 0; this->aY = 0;
         this->Size = Size;
-        this->Color = Color;
-        sprite = create_bitmap(Size,Size);
-     }
-     void Draw(){ // Draw the object on the buffer
-        applyPhysics();
-        checkBounds();
+    }
+    void Draw(){
         rectfill(buffer,X,Y,X+Size,Y+Size,Color);
-     }
-     void checkBounds(){ // Stop X or Y position on edge of map.
-        if(X > SCREEN_W-Size) X = SCREEN_W - Size;
-        if(X < 0) X = 0;
-        if(Y > SCREEN_H-Size){ Y = SCREEN_H - Size; aY=0; }
-        if(Y < 0) Y = 0;
-     }
-     void applyPhysics(){ //Velocity, Acceleration, and friction.
-        X += dX; dX += aX;
-        Y += dY; dY += aY;
-        dX *= 0.95;
-        dY *= 0.95;
-     }
+    }
+    void checkCollision(Block block){
+        Color = makecol(0,0,0);
+        if(block.X>X-Size && block.X<X+Size)
+        { //check for collision to player (x-part)
+            if(block.Y>Y-Size && block.Y<Y+Size)
+            { // (y-part)
+                Color = makecol(0,255,0);
+            }
+        }
+    }
 };
 
 int main(){
@@ -54,18 +50,32 @@ int main(){
     buffer = create_bitmap(640, 480);
     Block block (50,50,50,makecol(255,0,0));
 
+    Tile tileArray[] {
+        Tile(100,350,50),
+        Tile(400,350,50),
+        Tile(250,430,50)
+    };
+
     while (!(key[KEY_ESC] || closeWindow)) {
         if(ticks>0){
             clear(buffer); // For double buffering
+
             rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(0,0,255));
             textprintf_ex(buffer,font,10,10,makecol(0,0,0),-1,"Move with Left and Right, Up to jump. Esc to exit.");
+
             if(key[KEY_LEFT]){ block.dX--; }
             if(key[KEY_RIGHT]){ block.dX++; }
-            if(key[KEY_UP] && block.aY>=0 && block.Y>=SCREEN_H-block.Size){ block.dY = -5 ;block.aY= -1; } //No Y acc, and on ground. Then Jump.
+            if(key[KEY_UP] && block.aY>=0 && block.Y>=SCREEN_H-block.Size){ block.dY = -10 ;block.aY= -1; } //No Y acc, and on ground. Then Jump.
             if(key[KEY_DOWN]){ block.dY++; }
             block.aY += 0.1; // gravity
             block.Draw();
+
+            for(unsigned int i=0;i<(sizeof(tileArray)/sizeof(tileArray[0]));i++){
+                tileArray[i].Draw(); // Draw all tiles in tileArray
+                tileArray[i].checkCollision(block);
+            }
             show_mouse(buffer);
+
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);//Needs to be last draw command (Draw everything).
             ticks=0;
         } else {
