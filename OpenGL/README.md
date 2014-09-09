@@ -2,7 +2,7 @@
 
 <h4>Intro</h4>
 <p>
-These programs are written using openGL. To ensure compatibility I will <b>not</b> using the newest versions of openGL, and am sticking to openGL 1.x and 2.x.
+These programs are written using openGL. To ensure compatibility I will <b>not</b> using the newest versions of openGL, and am sticking to openGL 1.x and 2.x (and mabye 3.x).
 </p>
 
 <h4>Setup</h4>
