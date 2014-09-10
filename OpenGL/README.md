@@ -12,8 +12,8 @@ We will be using the original <em><a href="http://user.xmission.com/~nate/glut.h
 <p>
 You will need the following files:
 <ul>
-<li><strong>glut.h</strong> - In <em>include directory</em></li>
-<li><strong>glut32.lib</strong> - In <em>lib directory</em></li>
-<li><strong>glut32.dll</strong> - In <em>same directory as main program (ex: *.cpp file or *.exe file)</em></li>
+<li><strong>glut.h</strong> - In <em>include directory [ <strong>glut/GL</strong> ]</em></li>
+<li><strong>glut32.lib</strong> - In <em>lib directory [ <strong>glut/lib</strong> ]</em></li>
+<li><strong>glut32.dll</strong> - In <em>same directory as main program (ex: *.cpp file or *.exe file) [for Windows]</em></li>
 </ul>
 </p>
