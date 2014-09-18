@@ -34,7 +34,7 @@ Point::Point(int X, int Y, int Level) {
 
 vector<Point> points; // Point array (20 points max)
 vector< vector<Point> > levels; // Point array showing current level-n poly.
-//vector< vector<Point> > polys;
+vector< vector<Point> > polys; // generated sub-bezier polys.
 int currentLevel = -1;
 
 void generateBezier( vector<Point> points ) 
@@ -42,14 +42,26 @@ void generateBezier( vector<Point> points )
 	levels.push_back( *new vector<Point> );
 	currentLevel++;
 	for( size_t i = 1; i < points.size(); i++ ) {
-		// (1) break up into two polys 
 		int midx = (points[i-1].x + points[i].x) / 2;
 		int midy = (points[i-1].y + points[i].y) / 2;
-		levels[currentLevel].push_back(*new Point(midx, midy, currentLevel));
+		levels[currentLevel].push_back(*new Point(midx, midy, 0));
 	}
 	// If we are down to a single point, generate generate new poly-lines. Otherwise keep spliting.
 	if( levels[currentLevel].size() < (size_t)2 ) {
 		// (2) break up into two polys.
+		polys.clear();
+		size_t n = levels.size();
+		vector<Point> poly1;
+		vector<Point> poly2;
+		for(size_t i = 0; i < n; i++) {
+			size_t subN = levels[i].size();
+			if(subN > 0) {
+				poly1.push_back(*new Point(levels[i][0].x, levels[i][0].y, 0));
+				poly2.push_back(*new Point(levels[i][subN - 1].x, levels[i][subN - 1].y, 0));
+			}
+		}
+		polys.push_back(poly1);
+		polys.push_back(poly2);
 		currentLevel = -1;
 		return;
 	} else {
@@ -69,32 +81,15 @@ void renderScene(void)
 			glVertex2i(points[i].x, points[i].y);
 		}
 	glEnd();
-
+	
 	// Draw level-n poly
-	size_t n = levels.size();
-	for(size_t i = 0; i < n; i++)
-	{
-		size_t subN = levels[i].size();
-
-		// Draw process lines ([sub]level-1 to [sub]level-n)
-		glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	for(size_t i = 0; i	< polys.size(); i++) {
+		size_t subPolyN = polys[i].size();
 		glBegin(GL_LINE_STRIP);
-			for(size_t j = 0; j < subN; j++) {
-				glVertex2i(levels[i][j].x, levels[i][j].y);
+			for(size_t j = 0; j	< subPolyN; j++) {
+				glVertex2i(polys[i][j].x, polys[i][j].y);
 			}
-		glEnd();
-
-		// Draw Points for new polygons (idenification only).
-		glBegin(GL_POINTS);
-
-			// first sub poly
-			glColor3f(0.0f, 1.0f, 1.0f); 
-			glVertex2i(levels[i][0].x, levels[i][0].y);
-
-			//second sub poly
-			glColor3f(0.0f, 1.0f, 0.0f); 
-			glVertex2i(levels[i][subN - 1].x, levels[i][subN - 1].y);
-
 		glEnd();
 	}
 
@@ -116,6 +111,7 @@ void keyPress(unsigned char key, int x, int y)
 {
 	if(key == 'Q' || key == 'q')  exit(0); 
 	if(key == 'N' || key == 'n') {
+		polys.clear();
 		levels.clear(); // Clear level-i poly.
 		points.clear(); // Clear init poly lines 
 		currentLevel = -1; // Reset level.
