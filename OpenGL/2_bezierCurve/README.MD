@@ -29,7 +29,7 @@
 
 <h6><em>Prototype 1 :</em></h6> 
 
-   <p><strong>Definition</strong>: User can create initial polygon, and the program will show all lines from the generation of a bezier curve from level-0 to level-1. </p>
+<p><strong>Definition</strong>: User can create initial polygon, and the program will show all lines from the generation of a bezier curve from level-0 to level-1. </p>
    
    
    <p>Basic core functionality will be implemented:</p>
