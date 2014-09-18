@@ -1,5 +1,7 @@
 <h2>Bezier Curve Generator:<h2>
 
+<img src="bezierCurve.PNG"></img>
+
 <p>A program using OpenGL and GLUT to generate a n-level bezier curve based on a user inputed set of points.</p>
 
 <h4><strong>Requirements:</strong></h4>
@@ -19,7 +21,7 @@
             </ul>
          </li>
       </ul>
-
+      </li>
       <li>Generate Menu for all keyboard events.</li>
    </ol>
 
@@ -41,5 +43,4 @@
    </ol>
 <h6><em>Prototype 2 :</em></h6> 
 
-    <p><strong>Definition</strong>: The level-n polygon is now draw. The user can use "+" to do level-(i+1) and "-" to do level-(i-1). The user can also toggle level-0 and level-1 polygon.
-	 With the functionality of now adding points to the orignal vector being disabled on (display only: level-n poly), and adding points only on (display: level-0 and level-n poly)</p>
+    <p><strong>Definition</strong>: The level-n polygon is now draw. The user can use "+" to do level-(i+1) and "-" to do level-(i-1). The user can also toggle level-0 and level-1 polygon. With the functionality of now adding points to the orignal vector being disabled on (display only: level-n poly), and adding points only on (display: level-0 and level-n poly)</p>
