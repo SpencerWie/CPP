@@ -4,7 +4,7 @@
 #include <glut.h>
 #include <vector>
 
-
+// Window init size.
 int XSize = 640, YSize = 480;
 
 using namespace std;
@@ -37,6 +37,8 @@ vector< vector<Point> > levels; // Point array showing current level-n poly.
 vector< vector<Point> > polys; // generated sub-bezier polys.
 int currentLevel = -1;
 
+
+// Generate Bezier Curve of given poly (point vector)
 void generateBezier( vector<Point> points ) 
 {
 	levels.push_back( *new vector<Point> );
