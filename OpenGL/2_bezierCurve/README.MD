@@ -53,13 +53,13 @@
 
 <p><strong>Definition</strong>: The level-n polygon is now drawn. The user can use "+" to do level-(i+1) and "-" to do level-(i-1). The user can also toggle level-0 and level-1 polygon. With the functionality of now adding points to the orignal vector being disabled on (display only: level-n poly), and adding points only on (display: level-0 and level-n poly)</p>
 
-	<p>Following functionality will be implemented:</p>
-	<ol>
+  <p>Following functionality will be implemented:</p>
+  <ol>
   <li>Level-n level polygon implemented</li>
-	<li>User can change bezierLevel with "+" and "-"</li>
-	<li>User can toggle between control polygon with "p" or "P"</li>
-	<li>Menu items implemented (called by right-click) </li>
-	<li>User can remove last added point with "d" or "D"</li>
-	<li>Problems with generation of bezier curve beond level-2 are now fixed (refersed order for match for poly-2)</li>
-	<li>Problems with generation of bezier curve beond level-5 are now fixed (switched from int to float for points)</li>
+  <li>User can change bezierLevel with "+" and "-"</li>
+  <li>User can toggle between control polygon with "p" or "P"</li>
+  <li>Menu items implemented (called by right-click) </li>
+  <li>User can remove last added point with "d" or "D"</li>
+  <li>Problems with generation of bezier curve beond level-2 are now fixed (refersed order for match for poly-2)</li>
+  <li>Problems with generation of bezier curve beond level-5 are now fixed (switched from int to float for points)</li>
   </ol>
