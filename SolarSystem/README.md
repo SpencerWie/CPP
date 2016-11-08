@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<head>
-<title>README</title>
-</head>
-<body style="background-color: #ddd;">
+
 <div style="width: 90%; margin: auto; background-color: white; padding: 2%;">
 <p><em> Notice: It is reccommended to view this README file in a web broswer. </em></p>
 <h2>Solar System:</h2>
-<img src="solarSystem.png" alt="Solar System Program"></img>
+<img src="solarSystem.PNG" alt="Solar System Program"></img>
 
 <p><em>A program using OpenGL and GLUT to generate a 3D solar system.</em></p>
 
@@ -33,5 +29,3 @@
    
 <h4>
 </div>
-</body>
-</html>
